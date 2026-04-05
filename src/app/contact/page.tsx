@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useActionState } from "react";
+import { submitContactForm } from "@/app/actions";
 
 const serviceOptions = [
   "Commercial Build-Out",
@@ -13,21 +14,13 @@ const serviceOptions = [
   "Other",
 ];
 
-export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    service: "",
-    message: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
+const initialState = { success: false, message: "" };
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    // TODO: Connect to email service once DNS/MX is fixed
-    setSubmitted(true);
-  };
+export default function ContactPage() {
+  const [state, formAction, pending] = useActionState(
+    submitContactForm,
+    initialState
+  );
 
   return (
     <>
@@ -36,7 +29,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-6">
-              <span className="h-px w-12 bg-gold" />
+              <span className="h-px w-12 bg-gold" aria-hidden="true" />
               <span className="text-gold font-semibold text-sm tracking-widest uppercase">
                 Contact
               </span>
@@ -59,23 +52,45 @@ export default function ContactPage() {
           <div className="grid lg:grid-cols-5 gap-16">
             {/* Form */}
             <div className="lg:col-span-3">
-              {submitted ? (
-                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-12 text-center">
+              {state.success ? (
+                <div
+                  className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-12 text-center"
+                  role="status"
+                  aria-live="polite"
+                >
                   <div className="w-16 h-16 bg-green-100 dark:bg-green-900/40 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="w-8 h-8 text-green-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                   </div>
                   <h2 className="text-2xl font-bold text-navy dark:text-white mb-2">
                     Message Received
                   </h2>
-                  <p className="text-slate">
-                    Michael will get back to you within 24 hours — often the
-                    same day.
-                  </p>
+                  <p className="text-slate">{state.message}</p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form action={formAction} className="space-y-6">
+                  {/* Error message */}
+                  {state.message && !state.success && (
+                    <div
+                      className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 text-red-700 dark:text-red-400 text-sm"
+                      role="alert"
+                    >
+                      {state.message}
+                    </div>
+                  )}
+
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <label
@@ -87,11 +102,8 @@ export default function ContactPage() {
                       <input
                         type="text"
                         id="name"
+                        name="name"
                         required
-                        value={formData.name}
-                        onChange={(e) =>
-                          setFormData({ ...formData, name: e.target.value })
-                        }
                         className="w-full border border-border bg-white dark:bg-navy-light rounded-lg px-4 py-3 text-navy dark:text-white focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold transition-colors"
                         placeholder="Your name"
                       />
@@ -106,11 +118,8 @@ export default function ContactPage() {
                       <input
                         type="tel"
                         id="phone"
+                        name="phone"
                         required
-                        value={formData.phone}
-                        onChange={(e) =>
-                          setFormData({ ...formData, phone: e.target.value })
-                        }
                         className="w-full border border-border bg-white dark:bg-navy-light rounded-lg px-4 py-3 text-navy dark:text-white focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold transition-colors"
                         placeholder="(979) 000-0000"
                       />
@@ -127,10 +136,7 @@ export default function ContactPage() {
                     <input
                       type="email"
                       id="email"
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
+                      name="email"
                       className="w-full border border-border bg-white dark:bg-navy-light rounded-lg px-4 py-3 text-navy dark:text-white focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold transition-colors"
                       placeholder="your@email.com"
                     />
@@ -145,10 +151,7 @@ export default function ContactPage() {
                     </label>
                     <select
                       id="service"
-                      value={formData.service}
-                      onChange={(e) =>
-                        setFormData({ ...formData, service: e.target.value })
-                      }
+                      name="service"
                       className="w-full border border-border bg-white dark:bg-navy-light rounded-lg px-4 py-3 text-navy dark:text-white focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold transition-colors"
                     >
                       <option value="">Select a service</option>
@@ -169,12 +172,9 @@ export default function ContactPage() {
                     </label>
                     <textarea
                       id="message"
+                      name="message"
                       required
                       rows={5}
-                      value={formData.message}
-                      onChange={(e) =>
-                        setFormData({ ...formData, message: e.target.value })
-                      }
                       className="w-full border border-border bg-white dark:bg-navy-light rounded-lg px-4 py-3 text-navy dark:text-white focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold resize-none transition-colors"
                       placeholder="Tell us about your project — scope, timeline, budget range."
                     />
@@ -182,9 +182,10 @@ export default function ContactPage() {
 
                   <button
                     type="submit"
-                    className="bg-navy dark:bg-gold text-white dark:text-navy font-semibold px-8 py-4 rounded transition-colors hover:bg-navy-light dark:hover:bg-gold-light w-full md:w-auto"
+                    disabled={pending}
+                    className="bg-navy dark:bg-gold text-white dark:text-navy font-semibold px-8 py-4 rounded transition-colors hover:bg-navy-light dark:hover:bg-gold-light w-full md:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    Send Message
+                    {pending ? "Sending..." : "Send Message"}
                   </button>
                 </form>
               )}
@@ -212,7 +213,9 @@ export default function ContactPage() {
                     <p className="text-xs text-slate uppercase tracking-widest mb-1">
                       Location
                     </p>
-                    <p className="text-navy/80 dark:text-white/70">College Station, TX</p>
+                    <p className="text-navy/80 dark:text-white/70">
+                      College Station, TX
+                    </p>
                   </div>
                   <div>
                     <p className="text-xs text-slate uppercase tracking-widest mb-1">
@@ -254,10 +257,18 @@ export default function ContactPage() {
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
+                        aria-hidden="true"
                       >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
                       </svg>
-                      <span className="text-navy/70 dark:text-white/60 text-sm">{item}</span>
+                      <span className="text-navy/70 dark:text-white/60 text-sm">
+                        {item}
+                      </span>
                     </li>
                   ))}
                 </ul>
