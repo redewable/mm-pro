@@ -8,7 +8,9 @@
   --color-gold-light: #D4A94F;
   --color-gold-dark: #B8862E;
   --color-cream: #FAF8F5;
+  --color-warm-gray: #F5F3F0;
   --color-slate: #64748B;
+  --color-border: #E5E7EB;
   --color-background: #ffffff;
   --color-foreground: #0A1628;
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -21,22 +23,18 @@ html {
 body {
   background: var(--color-background);
   color: var(--color-foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
 }
 
-/* Gold accent underline for headings */
-.gold-underline {
-  position: relative;
-  display: inline-block;
-}
-.gold-underline::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background: var(--color-gold);
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #0A1628;
+    --color-foreground: #F1F5F9;
+    --color-border: #1E293B;
+    --color-warm-gray: #132039;
+    --color-cream: #0F1D33;
+  }
 }
 
 /* Smooth hover transitions */
@@ -45,5 +43,20 @@ body {
 }
 .hover-lift:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(10, 22, 40, 0.12);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Fade-in animation for scroll reveals */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: fadeUp 0.6s ease-out forwards;
 }
