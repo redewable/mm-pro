@@ -95,7 +95,7 @@ export default function Footer() {
               </a>
               <p className="text-white/50">College Station, TX</p>
               <p className="text-white/50">
-                Brazos, Burleson &amp; Grimes County
+                Brazos, Burleson, Grimes &amp; Robertson County
               </p>
               {/* Facebook */}
               <a

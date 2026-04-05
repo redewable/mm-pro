@@ -32,7 +32,7 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero */}
-      <section className="py-24 lg:py-32">
+      <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-6">
@@ -55,7 +55,7 @@ export default function ContactPage() {
 
       {/* Contact Content */}
       <section className="border-t border-border pb-24 lg:pb-32">
-        <div className="max-w-7xl mx-auto px-6 pt-24">
+        <div className="max-w-7xl mx-auto px-6 pt-20">
           <div className="grid lg:grid-cols-5 gap-16">
             {/* Form */}
             <div className="lg:col-span-3">
@@ -219,7 +219,7 @@ export default function ContactPage() {
                       Service Area
                     </p>
                     <p className="text-navy/80 dark:text-white/70">
-                      Brazos, Burleson &amp; Grimes County
+                      Brazos, Burleson, Grimes &amp; Robertson County
                     </p>
                     <p className="text-slate text-sm mt-1">
                       ~30-mile radius from College Station

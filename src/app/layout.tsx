@@ -9,11 +9,12 @@ export const metadata: Metadata = {
     template: "%s | M&M Pro Construction",
   },
   description:
-    "Professional general contractor in College Station, TX. Commercial build-outs, new construction, outdoor living spaces, and custom lighting. Serving Brazos, Burleson & Grimes County.",
+    "Professional general contractor in College Station, TX. Commercial build-outs, new construction, outdoor living spaces, and custom lighting. Serving Brazos, Burleson, Grimes & Robertson County.",
   keywords: [
     "general contractor College Station TX",
     "commercial contractor Bryan TX",
     "outdoor living contractor Brazos County",
+    "general contractor Robertson County TX",
     "custom pergola builder College Station",
     "remodeling contractor College Station",
     "commercial build-out Bryan College Station",

@@ -91,7 +91,7 @@ export default function PortfolioPage() {
   return (
     <>
       {/* Hero */}
-      <section className="py-24 lg:py-32">
+      <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-6">
@@ -119,7 +119,7 @@ export default function PortfolioPage() {
           {projects.map((project, index) => (
             <div
               key={project.title}
-              className={`grid lg:grid-cols-2 gap-16 items-center py-24 ${
+              className={`grid lg:grid-cols-2 gap-16 items-center py-20 ${
                 index < projects.length - 1 ? "border-b border-border" : ""
               }`}
             >
@@ -179,7 +179,7 @@ export default function PortfolioPage() {
       </section>
 
       {/* More Coming */}
-      <section className="bg-warm-gray dark:bg-navy-light border-t border-border py-24">
+      <section className="bg-warm-gray dark:bg-navy-light border-t border-border py-20">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <h2 className="text-2xl font-bold text-navy dark:text-white tracking-tight mb-4">
             Portfolio Growing Every Week

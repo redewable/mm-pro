@@ -68,7 +68,7 @@ const stats = [
   { value: "100%", label: "Referral-Based" },
   { value: "Same Day", label: "Response Time" },
   { value: "24–48 hr", label: "Estimate Turnaround" },
-  { value: "3 Counties", label: "Service Area" },
+  { value: "4 Counties", label: "Service Area" },
 ];
 
 export default function Home() {
@@ -97,9 +97,9 @@ export default function Home() {
               <span className="text-gold">It&apos;s Ours.</span>
             </h1>
             <p className="text-lg text-white/70 leading-relaxed mb-10 max-w-xl">
-              M&amp;M Pro Construction delivers turnkey commercial and
-              residential construction across the Brazos Valley. One point of
-              contact. Complete accountability. Professional results.
+              Turnkey commercial and residential construction across the
+              Brazos Valley. One point of contact. Complete accountability.
+              The kind of professionalism you feel from the first handshake.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
@@ -136,7 +136,7 @@ export default function Home() {
       </section>
 
       {/* Services */}
-      <section className="py-24 lg:py-32">
+      <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-2xl mb-16">
             <div className="flex items-center gap-3 mb-4">
@@ -188,7 +188,7 @@ export default function Home() {
 
       {/* Featured Project — Church */}
       <section className="bg-warm-gray dark:bg-navy-light border-y border-border">
-        <div className="max-w-7xl mx-auto px-6 py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-6 py-20 lg:py-28">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <div className="flex items-center gap-3 mb-4">
@@ -242,7 +242,7 @@ export default function Home() {
       </section>
 
       {/* Why M&M */}
-      <section className="py-24 lg:py-32">
+      <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-2xl mx-auto text-center mb-16">
             <div className="flex items-center justify-center gap-3 mb-4">
@@ -260,24 +260,47 @@ export default function Home() {
             {[
               {
                 title: "Same-Day Response",
-                desc: "We show up the day your lead comes in. Not next week. The same day.",
+                desc: "When you reach out, we show up — the same day. Not next week, not after three follow-ups. Speed is how we earn trust before the first nail is driven.",
+                icon: (
+                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 6v6l4 2" />
+                  </svg>
+                ),
               },
               {
                 title: "Turnkey Management",
-                desc: "You hire us and step back. We manage every trade, every timeline, every detail.",
+                desc: "You hire M&M and walk away until it's done. We coordinate every subcontractor, manage every inspection, and handle every detail so you don't have to.",
+                icon: (
+                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" />
+                    <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12" />
+                  </svg>
+                ),
               },
               {
                 title: "Transparent Pricing",
-                desc: "You know where every dollar goes. No surprises, no change-order games.",
+                desc: "You'll know where every dollar goes before we start. Detailed estimates, no hidden fees, and daily updates that keep you informed — not guessing.",
+                icon: (
+                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+                  </svg>
+                ),
               },
               {
                 title: "Spotless Jobsites",
-                desc: "Dirty jobs done cleanly. Our jobsite cleanliness is a signature trait clients mention.",
+                desc: "Dirty jobs done cleanly — it's a signature trait our clients mention in every review. A clean site means respect for your property and attention to detail.",
+                icon: (
+                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 12l2 2 4-4" />
+                    <path d="M12 3l1.912 5.813a2 2 0 001.272 1.278L21 12l-5.816 1.91a2 2 0 00-1.272 1.278L12 21l-1.912-5.813a2 2 0 00-1.272-1.278L3 12l5.816-1.91a2 2 0 001.272-1.278L12 3z" />
+                  </svg>
+                ),
               },
             ].map((item) => (
               <div key={item.title}>
-                <div className="w-10 h-10 border border-gold/30 rounded-lg flex items-center justify-center mb-4">
-                  <span className="w-2 h-2 bg-gold rounded-full" />
+                <div className="w-11 h-11 bg-gold/10 rounded-lg flex items-center justify-center text-gold mb-4">
+                  {item.icon}
                 </div>
                 <h3 className="text-base font-bold text-navy dark:text-white mb-2">
                   {item.title}
@@ -292,7 +315,7 @@ export default function Home() {
       </section>
 
       {/* Testimonial Preview */}
-      <section className="bg-warm-gray dark:bg-navy-light border-y border-border py-24">
+      <section className="bg-warm-gray dark:bg-navy-light border-y border-border py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <div className="flex justify-center gap-1 mb-6">
             {[...Array(5)].map((_, i) => (
@@ -322,7 +345,7 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="bg-navy text-white py-24">
+      <section className="bg-navy text-white py-20">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
             Ready to Build Something That Lasts?

@@ -32,7 +32,7 @@ export default function TestimonialsPage() {
   return (
     <>
       {/* Hero */}
-      <section className="py-24 lg:py-32">
+      <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-6">
@@ -96,7 +96,7 @@ export default function TestimonialsPage() {
       </section>
 
       {/* Pull Quote */}
-      <section className="bg-navy text-white py-24">
+      <section className="bg-navy text-white py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <svg className="w-10 h-10 text-gold/20 mx-auto mb-8" fill="currentColor" viewBox="0 0 24 24">
             <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
@@ -114,7 +114,7 @@ export default function TestimonialsPage() {
       </section>
 
       {/* Google Reviews CTA */}
-      <section className="py-24">
+      <section className="py-20">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <h2 className="text-2xl font-bold text-navy dark:text-white tracking-tight mb-4">
             Google Reviews Coming Soon

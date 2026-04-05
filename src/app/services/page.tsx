@@ -73,7 +73,7 @@ export default function ServicesPage() {
   return (
     <>
       {/* Hero */}
-      <section className="py-24 lg:py-32">
+      <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-6">
@@ -101,7 +101,7 @@ export default function ServicesPage() {
           {primaryServices.map((service, index) => (
             <div
               key={service.title}
-              className={`grid lg:grid-cols-2 gap-16 items-center py-24 ${
+              className={`grid lg:grid-cols-2 gap-16 items-center py-20 ${
                 index < primaryServices.length - 1 ? "border-b border-border" : ""
               }`}
             >
@@ -141,7 +141,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Additional Services */}
-      <section className="bg-warm-gray dark:bg-navy-light border-y border-border py-24 lg:py-32">
+      <section className="bg-warm-gray dark:bg-navy-light border-y border-border py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-2xl mb-16">
             <div className="flex items-center gap-3 mb-4">
@@ -173,7 +173,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Process */}
-      <section className="py-24 lg:py-32">
+      <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-2xl mb-16">
             <div className="flex items-center gap-3 mb-4">
@@ -205,7 +205,7 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-navy text-white py-24">
+      <section className="bg-navy text-white py-20">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold tracking-tight mb-4">
             Let&apos;s Scope Your Project

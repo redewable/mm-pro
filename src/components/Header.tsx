@@ -34,7 +34,7 @@ export default function Header() {
       {/* Top utility bar */}
       <div className="border-b border-border">
         <div className="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center text-xs text-slate">
-          <span>Serving Brazos, Burleson &amp; Grimes County</span>
+          <span>Serving Brazos, Burleson, Grimes &amp; Robertson County</span>
           <a
             href="tel:9795873639"
             className="text-navy dark:text-gold font-semibold hover:text-gold transition-colors"
