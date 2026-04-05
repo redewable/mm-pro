@@ -10,45 +10,21 @@ export const metadata: Metadata = {
 const testimonials = [
   {
     quote:
-      "Michael showed up the same day I called. That's never happened with any contractor. The work was flawless and the site was cleaner when he left than when he started.",
-    author: "Residential Client",
-    location: "College Station, TX",
-    project: "Outdoor Living Space",
+      "I had Michael put electricity in the new shed I had built. Very professional, cleaned up afterwards and reasonably priced. I'd hire him again in a minute.",
+    author: "Debi Briesacher",
+    project: "Electrical Installation",
   },
   {
     quote:
-      "We needed someone we could trust with our church renovation. Michael brought professionalism, transparency, and a genuine care for getting it right. He communicates every single day.",
-    author: "Church Board Member",
-    location: "Brazos County, TX",
-    project: "Commercial Renovation",
+      "Anyone who's looking to have any work done from a small job to a large job like putting in a Patio Cover, give Michael Ramirez a shot, he is excellent at what he does. I am very pleased with my end result on my Patio Cover, Michael did a large cover, added on a concrete pad and built a small deck for my shed, to say that I am pleased with this work says little.",
+    author: "Angela Erickson",
+    project: "Patio Cover, Concrete & Deck",
   },
   {
     quote:
-      "The custom lighting completely transformed our home. The attention to detail was incredible — from the fixture selection to the final placement. Our neighbors keep asking who did it.",
-    author: "Homeowner",
-    location: "College Station, TX",
-    project: "Custom Lighting",
-  },
-  {
-    quote:
-      "What stood out was the communication. We always knew where our money was going and what was happening next. No surprises. No runaround. That's rare in this industry.",
-    author: "Property Owner",
-    location: "Bryan, TX",
-    project: "Remodeling",
-  },
-  {
-    quote:
-      "I've hired a lot of contractors over the years. Michael is the first one who showed up dressed professionally, on time, every single day. The work quality matched the presentation.",
-    author: "Repeat Client",
-    location: "College Station, TX",
+      "Michael was very kind and professional! We have had multiple projects completed by him and will continue to call him!",
+    author: "Nancy Hartman",
     project: "Multiple Projects",
-  },
-  {
-    quote:
-      "Our covered patio is the centerpiece of our backyard now. The neighbors came over, saw it, and hired M&M the next week. That says everything.",
-    author: "Homeowner",
-    location: "Brazos County, TX",
-    project: "Covered Patio & Pergola",
   },
 ];
 
@@ -72,20 +48,20 @@ export default function TestimonialsPage() {
             <p className="text-slate text-lg leading-relaxed">
               Every client we&apos;ve ever served came through a personal
               referral. That says more about our work than any advertisement ever
-              could.
+              could. Here&apos;s what they have to say.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Testimonials Grid */}
+      {/* Testimonials */}
       <section className="border-t border-border pb-24">
         <div className="max-w-7xl mx-auto px-6 pt-24">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="bg-white dark:bg-navy-light border border-border rounded-lg p-8 hover-lift"
+                className="bg-white dark:bg-navy-light border border-border rounded-lg p-8 hover-lift flex flex-col"
               >
                 {/* Stars */}
                 <div className="flex gap-1 mb-5">
@@ -101,7 +77,7 @@ export default function TestimonialsPage() {
                   ))}
                 </div>
 
-                <p className="text-navy/80 dark:text-white/70 leading-relaxed mb-6 text-sm">
+                <p className="text-navy/80 dark:text-white/70 leading-relaxed mb-6 text-sm flex-1">
                   &ldquo;{testimonial.quote}&rdquo;
                 </p>
 
@@ -110,7 +86,7 @@ export default function TestimonialsPage() {
                     {testimonial.author}
                   </p>
                   <p className="text-slate text-xs mt-0.5">
-                    {testimonial.location} &bull; {testimonial.project}
+                    {testimonial.project}
                   </p>
                 </div>
               </div>
@@ -145,14 +121,24 @@ export default function TestimonialsPage() {
           </h2>
           <p className="text-slate leading-relaxed mb-8">
             We&apos;re in the process of verifying our Google Business Profile.
-            In the meantime, we&apos;d love to hear from you directly.
+            In the meantime, find us on Facebook or reach out directly.
           </p>
-          <Link
-            href="/contact"
-            className="bg-navy dark:bg-gold text-white dark:text-navy font-semibold px-8 py-4 rounded transition-colors hover:bg-navy-light dark:hover:bg-gold-light inline-block"
-          >
-            Get in Touch
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/contact"
+              className="bg-navy dark:bg-gold text-white dark:text-navy font-semibold px-8 py-4 rounded transition-colors hover:bg-navy-light dark:hover:bg-gold-light inline-block"
+            >
+              Get in Touch
+            </Link>
+            <a
+              href="https://www.facebook.com/profile.php?id=61581997151917"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-border hover:border-navy dark:hover:border-gold text-navy dark:text-white font-semibold px-8 py-4 rounded transition-colors inline-block"
+            >
+              Follow on Facebook
+            </a>
+          </div>
         </div>
       </section>
     </>

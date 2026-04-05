@@ -74,23 +74,29 @@ const stats = [
 export default function Home() {
   return (
     <>
-      {/* Hero — full-width photo area with overlay */}
-      <section className="relative bg-warm-gray dark:bg-navy overflow-hidden">
-        {/* Placeholder for hero image — swap with real project photo */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white via-warm-gray to-cream dark:from-navy dark:via-navy-light dark:to-navy-dark" />
-        <div className="relative max-w-7xl mx-auto px-6 py-28 lg:py-44">
+      {/* Hero — full-width with outdoor cabana background */}
+      <section className="relative bg-navy overflow-hidden min-h-[600px] lg:min-h-[700px] flex items-center">
+        <Image
+          src="/outdoor-cabana.webp"
+          alt="Custom outdoor cabana built by M&M Pro Construction"
+          fill
+          className="object-cover object-center"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/70 to-navy/30" />
+        <div className="relative max-w-7xl mx-auto px-6 py-28 lg:py-44 w-full">
           <div className="max-w-2xl">
             <div className="flex items-center gap-3 mb-6">
               <span className="h-px w-12 bg-gold" />
               <span className="text-gold font-semibold text-sm tracking-widest uppercase">
-                General Contractor
+                General Contractor &bull; College Station, TX
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-navy dark:text-white mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-white mb-6">
               We Build It Like{" "}
               <span className="text-gold">It&apos;s Ours.</span>
             </h1>
-            <p className="text-lg text-slate dark:text-white/60 leading-relaxed mb-10 max-w-xl">
+            <p className="text-lg text-white/70 leading-relaxed mb-10 max-w-xl">
               M&amp;M Pro Construction delivers turnkey commercial and
               residential construction across the Brazos Valley. One point of
               contact. Complete accountability. Professional results.
@@ -98,13 +104,13 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/contact"
-                className="bg-navy dark:bg-gold text-white dark:text-navy font-semibold px-8 py-4 rounded text-center transition-colors hover:bg-navy-light dark:hover:bg-gold-light"
+                className="bg-gold hover:bg-gold-light text-navy font-semibold px-8 py-4 rounded text-center transition-colors"
               >
                 Request a Free Estimate
               </Link>
               <Link
                 href="/services"
-                className="border border-navy/20 dark:border-white/20 text-navy dark:text-white font-semibold px-8 py-4 rounded text-center transition-colors hover:border-navy/40 dark:hover:border-white/40"
+                className="border border-white/30 hover:border-white/50 text-white font-semibold px-8 py-4 rounded text-center transition-colors"
               >
                 Our Services
               </Link>
@@ -180,7 +186,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Project */}
+      {/* Featured Project — Church */}
       <section className="bg-warm-gray dark:bg-navy-light border-y border-border">
         <div className="max-w-7xl mx-auto px-6 py-24 lg:py-32">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -192,7 +198,7 @@ export default function Home() {
                 </span>
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-white tracking-tight mb-6">
-                Free Wheel Fellowship Baptist Church
+                Fellowship Free Will Baptist Church
               </h2>
               <p className="text-slate leading-relaxed mb-8">
                 A full-scope commercial project — concrete sidewalk removal and
@@ -223,13 +229,13 @@ export default function Home() {
                 </svg>
               </Link>
             </div>
-            <div className="bg-white dark:bg-navy border border-border rounded-lg aspect-[4/3] flex items-center justify-center">
-              <div className="text-center text-slate/30">
-                <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <p className="text-sm">Project photos coming soon</p>
-              </div>
+            <div className="relative rounded-lg overflow-hidden aspect-[4/3]">
+              <Image
+                src="/fellowship-free-will-baptist-church.png"
+                alt="Fellowship Free Will Baptist Church — M&M Pro Construction project"
+                fill
+                className="object-cover object-center"
+              />
             </div>
           </div>
         </div>
@@ -282,6 +288,36 @@ export default function Home() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Testimonial Preview */}
+      <section className="bg-warm-gray dark:bg-navy-light border-y border-border py-24">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <div className="flex justify-center gap-1 mb-6">
+            {[...Array(5)].map((_, i) => (
+              <svg key={i} className="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            ))}
+          </div>
+          <p className="text-xl md:text-2xl text-navy dark:text-white leading-relaxed mb-6">
+            &ldquo;Anyone who&apos;s looking to have any work done from a small job
+            to a large job like putting in a Patio Cover, give Michael Ramirez a
+            shot, he is excellent at what he does. I am very pleased with my end
+            result.&rdquo;
+          </p>
+          <p className="text-navy dark:text-white font-semibold">Angela Erickson</p>
+          <p className="text-slate text-sm">Patio Cover &amp; Concrete</p>
+          <Link
+            href="/testimonials"
+            className="inline-flex items-center gap-2 text-gold font-semibold text-sm mt-8 hover:gap-3 transition-all"
+          >
+            Read More Reviews
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
         </div>
       </section>
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -9,8 +10,10 @@ export const metadata: Metadata = {
 
 const projects = [
   {
-    title: "Free Wheel Fellowship Baptist Church",
+    title: "Fellowship Free Will Baptist Church",
     category: "Commercial",
+    image: "/fellowship-free-will-baptist-church.png",
+    imageAlt: "Fellowship Free Will Baptist Church exterior",
     description:
       "Full-scope commercial project: concrete sidewalk removal and replacement, new slab work, 7-foot-wide metal covered walkway, commercial door installation, LED lighting, and ADA compliance improvements.",
     scope: [
@@ -23,28 +26,62 @@ const projects = [
     status: "In Progress",
   },
   {
-    title: "Residential Outdoor Living",
+    title: "Outdoor Cabana & Living Space",
     category: "Outdoor Living",
+    image: "/outdoor-cabana.webp",
+    imageAlt: "Custom outdoor cabana with cedar framing and ceiling fan",
     description:
-      "Custom pergola and covered patio with integrated landscape lighting. Designed to maximize shade and usability in the Texas heat while creating a resort-style backyard experience.",
+      "Custom cedar cabana with metal roof, ceiling fan installation, and concrete pad on a rural Texas property. Built for shade, durability, and year-round outdoor entertaining.",
     scope: [
-      "Custom pergola design & build",
-      "Covered patio structure",
-      "Landscape pathway lighting",
-      "Decorative pendant fixtures",
+      "Custom cedar timber frame structure",
+      "Metal roof installation",
+      "Ceiling fan & electrical",
+      "Concrete pad & seating area",
     ],
     status: "Completed",
   },
   {
-    title: "Custom Lighting Installation",
-    category: "Custom Lighting",
+    title: "Covered Patio Extension",
+    category: "Outdoor Living",
+    image: "/patio-extension.webp",
+    imageAlt: "Covered patio extension with cedar beams and ceiling fan",
     description:
-      "Full decorative lighting package including chandelier installation, pendant fixtures, and architectural accent lighting for a high-end residential client.",
+      "Covered patio addition with cedar post-and-beam construction, metal roofing, integrated ceiling fan and light fixture. Extends the home's living space into the backyard.",
     scope: [
-      "Chandelier selection & installation",
-      "Pendant fixture mounting",
-      "Accent lighting design",
-      "Dimmer & controls setup",
+      "Cedar post-and-beam framing",
+      "Metal roof tied into existing structure",
+      "Ceiling fan & light installation",
+      "Concrete pad extension",
+    ],
+    status: "Completed",
+  },
+  {
+    title: "Horse Stables & Lighting",
+    category: "New Construction",
+    image: "/horse-stables.webp",
+    imageAlt: "Horse stables at dusk with LED lighting",
+    description:
+      "Custom horse stable structure with full LED lighting package. Metal frame construction with wood rail fencing and integrated storage. Photographed here at dusk showing the complete lighting design.",
+    scope: [
+      "Metal frame stable construction",
+      "Wood rail fencing",
+      "Full LED lighting package",
+      "Storage integration",
+    ],
+    status: "Completed",
+  },
+  {
+    title: "Bathroom Remodel",
+    category: "Remodeling",
+    image: "/bathroom-remodel.jpg",
+    imageAlt: "Modern bathroom remodel with freestanding tub and tile accent wall",
+    description:
+      "Complete bathroom renovation featuring a freestanding soaking tub, subway tile accent wall, custom vanity lighting, and stone-look floor tile. Clean, modern design with high-end finishes.",
+    scope: [
+      "Freestanding tub installation",
+      "Subway tile accent wall",
+      "Custom vanity lighting",
+      "Stone-look floor tile",
     ],
     status: "Completed",
   },
@@ -86,18 +123,18 @@ export default function PortfolioPage() {
                 index < projects.length - 1 ? "border-b border-border" : ""
               }`}
             >
-              {/* Image placeholder */}
+              {/* Image */}
               <div
-                className={`bg-warm-gray dark:bg-navy-light border border-border rounded-lg aspect-[4/3] flex items-center justify-center ${
+                className={`relative rounded-lg overflow-hidden aspect-[4/3] ${
                   index % 2 === 1 ? "lg:order-2" : ""
                 }`}
               >
-                <div className="text-center text-slate/30">
-                  <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <p className="text-sm">Before / After coming soon</p>
-                </div>
+                <Image
+                  src={project.image}
+                  alt={project.imageAlt}
+                  fill
+                  className="object-cover object-center"
+                />
               </div>
 
               {/* Details */}
@@ -148,9 +185,8 @@ export default function PortfolioPage() {
             Portfolio Growing Every Week
           </h2>
           <p className="text-slate leading-relaxed mb-8">
-            We&apos;re actively documenting current projects with professional
-            photography. Check back for new before-and-after showcases, client
-            stories, and project walkthroughs.
+            We&apos;re actively documenting current and upcoming projects.
+            Check back for new showcases and project walkthroughs.
           </p>
           <Link
             href="/contact"

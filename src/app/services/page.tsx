@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -19,6 +20,8 @@ const primaryServices = [
       "Commercial door installation",
       "Budget management & transparent reporting",
     ],
+    image: "/fellowship-free-will-baptist-church.png",
+    imageAlt: "Fellowship Free Will Baptist Church — commercial project by M&M Pro",
   },
   {
     title: "Outdoor Living Spaces",
@@ -31,11 +34,13 @@ const primaryServices = [
       "Integrated lighting design",
       "Landscape coordination",
     ],
+    image: "/outdoor-cabana.webp",
+    imageAlt: "Custom outdoor cabana with cedar framing built by M&M Pro",
   },
   {
     title: "Custom & Decorative Lighting",
     description:
-      "Chandeliers, pendant fixtures, architectural lighting, and landscape pathway illumination. High-impact installations that transform any space — from commercial lobbies to residential outdoor living areas.",
+      "Chandeliers, pendant fixtures, architectural lighting, and landscape pathway illumination. High-impact installations that transform any space — from commercial facilities to residential outdoor living areas.",
     features: [
       "Chandelier & pendant installation",
       "Ceiling fixture design & mounting",
@@ -43,6 +48,8 @@ const primaryServices = [
       "LED commercial lighting",
       "Accent & architectural lighting",
     ],
+    image: "/horse-stables.webp",
+    imageAlt: "Horse stables at dusk with full LED lighting by M&M Pro",
   },
 ];
 
@@ -94,7 +101,7 @@ export default function ServicesPage() {
           {primaryServices.map((service, index) => (
             <div
               key={service.title}
-              className={`grid lg:grid-cols-2 gap-16 items-start py-24 ${
+              className={`grid lg:grid-cols-2 gap-16 items-center py-24 ${
                 index < primaryServices.length - 1 ? "border-b border-border" : ""
               }`}
             >
@@ -120,13 +127,13 @@ export default function ServicesPage() {
                   ))}
                 </ul>
               </div>
-              <div className={`bg-warm-gray dark:bg-navy-light border border-border rounded-lg aspect-[4/3] flex items-center justify-center ${index % 2 === 1 ? "lg:order-1" : ""}`}>
-                <div className="text-center text-slate/30">
-                  <svg className="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <p className="text-xs">Project photo coming soon</p>
-                </div>
+              <div className={`relative rounded-lg overflow-hidden aspect-[4/3] ${index % 2 === 1 ? "lg:order-1" : ""}`}>
+                <Image
+                  src={service.image}
+                  alt={service.imageAlt}
+                  fill
+                  className="object-cover object-center"
+                />
               </div>
             </div>
           ))}
