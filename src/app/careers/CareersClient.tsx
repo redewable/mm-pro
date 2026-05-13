@@ -40,6 +40,33 @@ const positions: Position[] = [
       "Respect the crew. We work as a team or we don't work here.",
     ],
   },
+  {
+    id: "entry-level-helper",
+    title: "Entry-Level Helper",
+    type: "Full-time · Brazos Valley",
+    summary:
+      "No construction experience? That's fine — but you'd better bring the right attitude. We'll teach you the trade if you bring the work ethic. This is a real opportunity to learn from people who care about doing it right.",
+    responsibilities: [
+      "Assist the crew with whatever the day calls for — material handling, demo, clean-up, set-up, and general site support.",
+      "Learn the tools, the techniques, and the standards by watching, asking, and doing.",
+      "Keep the job site clean, organized, and safe — that's everyone's job, but especially yours starting out.",
+      "Earn more responsibility as you prove you can handle it.",
+    ],
+    experience: [
+      "No prior construction experience required.",
+      "A real desire to learn a trade and build a career — not just collect a paycheck.",
+      "Reliable transportation to job sites across Brazos, Burleson, Grimes, and Robertson County.",
+      "Able to lift 50+ lbs and work outdoors in Texas heat.",
+      "Willing to ask questions, take direction, and put in the effort.",
+    ],
+    nonNegotiables: [
+      "Show up on time, every day. If you can't make it, you call — early.",
+      "Treat every client's home or business like it's your own.",
+      "No drugs, no drama, no excuses.",
+      "Listen, learn, and don't pretend to know what you don't.",
+      "Respect the crew. We work as a team or we don't work here.",
+    ],
+  },
 ];
 
 const initialState = { success: false, message: "" };
