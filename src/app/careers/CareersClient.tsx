@@ -10,6 +10,7 @@ interface Position {
   summary: string;
   responsibilities: string[];
   experience: string[];
+  bonus?: string[];
   nonNegotiables: string[];
 }
 
@@ -31,6 +32,15 @@ const positions: Position[] = [
       "Comfortable with common hand and power tools.",
       "Reliable transportation to job sites across Brazos, Burleson, Grimes, and Robertson County.",
       "Able to lift 50+ lbs and work outdoors in Texas heat.",
+    ],
+    bonus: [
+      "OSHA 10 or OSHA 30 certification.",
+      "CPR / First Aid certification.",
+      "Forklift, scissor lift, skid steer, or other equipment operator certifications.",
+      "CDL (Class A or B).",
+      "Welding experience (stick, MIG, or TIG).",
+      "Framing, drywall, finish carpentry, or concrete finishing experience.",
+      "Electrical, plumbing, or HVAC training or apprentice-level experience.",
     ],
     nonNegotiables: [
       "Show up on time, every day. If you can't make it, you call — early.",
@@ -249,6 +259,34 @@ export default function CareersClient() {
                           </ul>
                         </div>
                       </div>
+
+                      {position.bonus && position.bonus.length > 0 && (
+                        <div className="mt-8 pt-6 border-t border-border">
+                          <h4 className="text-xs font-semibold tracking-[0.15em] uppercase text-slate mb-2">
+                            Bonus — These Get a Closer Look
+                          </h4>
+                          <p className="text-slate text-sm mb-3">
+                            Bring any of these to the table and they likely
+                            shape your starting pay.
+                          </p>
+                          <ul className="space-y-2">
+                            {position.bonus.map((item) => (
+                              <li
+                                key={item}
+                                className="flex items-start gap-3 text-sm text-navy/70 dark:text-white/60"
+                              >
+                                <span
+                                  className="text-gold mt-1.5 leading-none"
+                                  aria-hidden="true"
+                                >
+                                  •
+                                </span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
 
                       <div className="mt-8 pt-6 border-t border-border">
                         <h4 className="text-xs font-semibold tracking-[0.15em] uppercase text-gold mb-3">
