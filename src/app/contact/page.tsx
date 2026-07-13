@@ -1,7 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
-import { submitContactForm } from "@/app/actions";
+import { useState, type FormEvent } from "react";
+import { sendToFormSubmit } from "@/lib/formsubmit";
 
 const serviceOptions = [
   "Commercial Build-Out",
@@ -17,10 +17,59 @@ const serviceOptions = [
 const initialState = { success: false, message: "" };
 
 export default function ContactPage() {
-  const [state, formAction, pending] = useActionState(
-    submitContactForm,
-    initialState
-  );
+  const [state, setState] = useState(initialState);
+  const [pending, setPending] = useState(false);
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+
+    const name = ((data.get("name") as string) || "").trim();
+    const phone = ((data.get("phone") as string) || "").trim();
+    const email = ((data.get("email") as string) || "").trim();
+    const service = ((data.get("service") as string) || "").trim();
+    const message = ((data.get("message") as string) || "").trim();
+
+    if (!name || !phone || !message) {
+      setState({
+        success: false,
+        message: "Please fill in all required fields.",
+      });
+      return;
+    }
+
+    // Field names with spaces become the row labels in the email.
+    const payload = new FormData();
+    payload.append("Name", name);
+    payload.append("Phone", phone);
+    payload.append("Email", email || "Not provided");
+    payload.append("Service", service || "Not specified");
+    payload.append("Message", message);
+    payload.append(
+      "_subject",
+      `New Lead: ${name} — ${service || "General Inquiry"}`
+    );
+    payload.append("_template", "table");
+    payload.append("_captcha", "false");
+    if (email) payload.append("_replyto", email);
+
+    setPending(true);
+    const result = await sendToFormSubmit(
+      payload,
+      "Something went wrong. Please call us at (979) 587-3639."
+    );
+    setPending(false);
+
+    setState(
+      result.success
+        ? {
+            success: true,
+            message:
+              "Message received! Michael will get back to you within 24 hours.",
+          }
+        : result
+    );
+  }
 
   return (
     <>
@@ -80,7 +129,7 @@ export default function ContactPage() {
                   <p className="text-slate">{state.message}</p>
                 </div>
               ) : (
-                <form action={formAction} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Error message */}
                   {state.message && !state.success && (
                     <div

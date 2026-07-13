@@ -1,7 +1,7 @@
 "use client";
 
-import { useActionState, useState } from "react";
-import { submitApplication } from "@/app/actions";
+import { useState, type FormEvent } from "react";
+import { sendToFormSubmit } from "@/lib/formsubmit";
 
 interface Position {
   id: string;
@@ -81,16 +81,103 @@ const positions: Position[] = [
 
 const initialState = { success: false, message: "" };
 
+const RESUME_MAX_BYTES = 5 * 1024 * 1024; // 5 MB
+const RESUME_ALLOWED_TYPES = new Set([
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+]);
+const RESUME_ALLOWED_EXTENSIONS = [".pdf", ".doc", ".docx"];
+
 export default function CareersClient() {
-  const [state, formAction, pending] = useActionState(
-    submitApplication,
-    initialState
-  );
+  const [state, setState] = useState(initialState);
+  const [pending, setPending] = useState(false);
   const [openId, setOpenId] = useState<string | null>(positions[0]?.id ?? null);
   const [selectedPosition, setSelectedPosition] = useState<string>(
     positions[0]?.title ?? ""
   );
   const [resumeName, setResumeName] = useState<string>("");
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+
+    const name = ((data.get("name") as string) || "").trim();
+    const email = ((data.get("email") as string) || "").trim();
+    const phone = ((data.get("phone") as string) || "").trim();
+    const position = ((data.get("position") as string) || "").trim();
+    const experience = ((data.get("experience") as string) || "").trim();
+    const message = ((data.get("message") as string) || "").trim();
+    const resume = data.get("resume");
+
+    if (!name || !phone || !position || !experience) {
+      setState({
+        success: false,
+        message:
+          "Please fill in your name, phone, position, and a quick note about your experience.",
+      });
+      return;
+    }
+
+    // Resume validation (optional — applicants can apply without one, but if
+    // included it must meet the constraints).
+    let resumeFile: File | null = null;
+    if (resume instanceof File && resume.size > 0) {
+      if (resume.size > RESUME_MAX_BYTES) {
+        setState({
+          success: false,
+          message: "Resume must be 5 MB or smaller.",
+        });
+        return;
+      }
+      const lowerName = resume.name.toLowerCase();
+      const extensionOk = RESUME_ALLOWED_EXTENSIONS.some((ext) =>
+        lowerName.endsWith(ext)
+      );
+      const typeOk = resume.type
+        ? RESUME_ALLOWED_TYPES.has(resume.type)
+        : false;
+      if (!extensionOk && !typeOk) {
+        setState({
+          success: false,
+          message: "Resume must be a PDF, DOC, or DOCX file.",
+        });
+        return;
+      }
+      resumeFile = resume;
+    }
+
+    // Field names with spaces become the row labels in the email.
+    const payload = new FormData();
+    payload.append("Position", position);
+    payload.append("Name", name);
+    payload.append("Phone", phone);
+    payload.append("Email", email || "Not provided");
+    payload.append("Experience", experience);
+    payload.append("Notes", message || "(none)");
+    payload.append("_subject", `New Application: ${name} — ${position}`);
+    payload.append("_template", "table");
+    payload.append("_captcha", "false");
+    if (email) payload.append("_replyto", email);
+    if (resumeFile) payload.append("attachment", resumeFile, resumeFile.name);
+
+    setPending(true);
+    const result = await sendToFormSubmit(
+      payload,
+      "Something went wrong sending your application. Please call us at (979) 587-3639."
+    );
+    setPending(false);
+
+    setState(
+      result.success
+        ? {
+            success: true,
+            message:
+              "Application received! Michael will review it and reach out if it's a fit.",
+          }
+        : result
+    );
+  }
 
   return (
     <>
@@ -398,7 +485,7 @@ export default function CareersClient() {
                   <p className="text-slate">{state.message}</p>
                 </div>
               ) : (
-                <form action={formAction} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   {state.message && !state.success && (
                     <div
                       className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 text-red-700 dark:text-red-400 text-sm"
