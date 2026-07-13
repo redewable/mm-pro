@@ -24,8 +24,11 @@ const RESUME_ALLOWED_EXTENSIONS = [".pdf", ".doc", ".docx"];
 // first submission triggers an activation email to the recipient; once
 // Michael clicks the activation link, every subsequent message arrives
 // directly in his inbox.
+// The /ajax/ endpoint is FormSubmit's API for programmatic (non-browser)
+// posts — required here because server actions submit from the server, not
+// the user's browser. It returns JSON: { success: "true"|"false", message }.
 const FORM_RECIPIENT = "mram@mmprocon.com";
-const FORMSUBMIT_ENDPOINT = `https://formsubmit.co/${FORM_RECIPIENT}`;
+const FORMSUBMIT_ENDPOINT = `https://formsubmit.co/ajax/${FORM_RECIPIENT}`;
 
 export async function submitContactForm(
   _prevState: ContactFormState,
@@ -67,14 +70,19 @@ export async function submitContactForm(
     const res = await fetch(FORMSUBMIT_ENDPOINT, {
       method: "POST",
       body: payload,
-      // FormSubmit responds with a 302 redirect to its default thanks page on
-      // success. Following the redirect to a 200 lets us check res.ok cleanly.
-      redirect: "follow",
+      headers: { Accept: "application/json" },
     });
 
-    if (!res.ok) {
-      const errorBody = await res.text().catch(() => "");
-      console.error("FormSubmit error:", res.status, errorBody);
+    // The ajax endpoint returns { success: "true"|"false", message: "..." }.
+    const result = (await res.json().catch(() => null)) as {
+      success?: string | boolean;
+      message?: string;
+    } | null;
+    const delivered =
+      res.ok && (result?.success === "true" || result?.success === true);
+
+    if (!delivered) {
+      console.error("FormSubmit error:", res.status, result);
       return {
         success: false,
         message: "Something went wrong. Please call us at (979) 587-3639.",
@@ -173,14 +181,19 @@ export async function submitApplication(
     const res = await fetch(FORMSUBMIT_ENDPOINT, {
       method: "POST",
       body: payload,
-      // FormSubmit responds with a 302 redirect to its default thanks page on
-      // success. Following the redirect to a 200 lets us check res.ok cleanly.
-      redirect: "follow",
+      headers: { Accept: "application/json" },
     });
 
-    if (!res.ok) {
-      const errorBody = await res.text().catch(() => "");
-      console.error("FormSubmit error:", res.status, errorBody);
+    // The ajax endpoint returns { success: "true"|"false", message: "..." }.
+    const result = (await res.json().catch(() => null)) as {
+      success?: string | boolean;
+      message?: string;
+    } | null;
+    const delivered =
+      res.ok && (result?.success === "true" || result?.success === true);
+
+    if (!delivered) {
+      console.error("FormSubmit error:", res.status, result);
       return {
         success: false,
         message:
