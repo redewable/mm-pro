@@ -18,6 +18,15 @@ const RESUME_ALLOWED_TYPES = new Set([
 ]);
 const RESUME_ALLOWED_EXTENSIONS = [".pdf", ".doc", ".docx"];
 
+// Contact inquiries and careers applications are forwarded to
+// mram@mmprocon.com via FormSubmit.co. FormSubmit is free and requires no API
+// key — it posts the form fields and any attachment as an email. The very
+// first submission triggers an activation email to the recipient; once
+// Michael clicks the activation link, every subsequent message arrives
+// directly in his inbox.
+const FORM_RECIPIENT = "mram@mmprocon.com";
+const FORMSUBMIT_ENDPOINT = `https://formsubmit.co/${FORM_RECIPIENT}`;
+
 export async function submitContactForm(
   _prevState: ContactFormState,
   formData: FormData
@@ -36,54 +45,36 @@ export async function submitContactForm(
     };
   }
 
-  // Send email via Resend (free tier: 100 emails/day)
-  const apiKey = process.env.RESEND_API_KEY;
+  // Send email via FormSubmit.co (same setup as the careers form — free,
+  // no API key, delivers straight to Michael's inbox).
+  const payload = new FormData();
+  payload.append("Name", name);
+  payload.append("Phone", phone);
+  payload.append("Email", email || "Not provided");
+  payload.append("Service", service || "Not specified");
+  payload.append("Message", message);
 
-  if (!apiKey) {
-    // Fallback: log the submission (visible in Vercel function logs)
-    console.log("=== NEW CONTACT FORM SUBMISSION ===");
-    console.log(`Name: ${name}`);
-    console.log(`Phone: ${phone}`);
-    console.log(`Email: ${email || "Not provided"}`);
-    console.log(`Service: ${service || "Not specified"}`);
-    console.log(`Message: ${message}`);
-    console.log("===================================");
-
-    return {
-      success: true,
-      message:
-        "Message received! Michael will get back to you within 24 hours.",
-    };
-  }
+  // FormSubmit control fields (all prefixed with underscore).
+  payload.append(
+    "_subject",
+    `New Lead: ${name} — ${service || "General Inquiry"}`
+  );
+  payload.append("_template", "table");
+  payload.append("_captcha", "false");
+  if (email) payload.append("_replyto", email);
 
   try {
-    const res = await fetch("https://api.resend.com/emails", {
+    const res = await fetch(FORMSUBMIT_ENDPOINT, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "M&M Pro Website <onboarding@resend.dev>",
-        to: ["bttbmgmt@gmail.com"],
-        subject: `New Lead: ${name} — ${service || "General Inquiry"}`,
-        html: `
-          <h2>New Contact Form Submission</h2>
-          <table style="border-collapse:collapse;width:100%;max-width:600px;">
-            <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Name</td><td style="padding:8px;border-bottom:1px solid #eee;">${name}</td></tr>
-            <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Phone</td><td style="padding:8px;border-bottom:1px solid #eee;"><a href="tel:${phone}">${phone}</a></td></tr>
-            <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Email</td><td style="padding:8px;border-bottom:1px solid #eee;">${email || "Not provided"}</td></tr>
-            <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Service</td><td style="padding:8px;border-bottom:1px solid #eee;">${service || "Not specified"}</td></tr>
-            <tr><td style="padding:8px;font-weight:bold;vertical-align:top;">Message</td><td style="padding:8px;">${message.replace(/\n/g, "<br>")}</td></tr>
-          </table>
-          <p style="color:#888;font-size:12px;margin-top:20px;">Sent from mnmproconstruction.com contact form</p>
-        `,
-      }),
+      body: payload,
+      // FormSubmit responds with a 302 redirect to its default thanks page on
+      // success. Following the redirect to a 200 lets us check res.ok cleanly.
+      redirect: "follow",
     });
 
     if (!res.ok) {
-      const errorBody = await res.text();
-      console.error("Resend API error:", errorBody);
+      const errorBody = await res.text().catch(() => "");
+      console.error("FormSubmit error:", res.status, errorBody);
       return {
         success: false,
         message: "Something went wrong. Please call us at (979) 587-3639.",
@@ -103,14 +94,6 @@ export async function submitContactForm(
     };
   }
 }
-
-// Careers applications are forwarded to mram@mmprocon.com via FormSubmit.co.
-// FormSubmit is free and requires no API key — it posts the form fields and
-// any attachment as an email. The very first submission triggers an activation
-// email to the recipient; once Michael clicks the activation link, every
-// subsequent application arrives directly in his inbox.
-const APPLICATION_RECIPIENT = "mram@mmprocon.com";
-const FORMSUBMIT_ENDPOINT = `https://formsubmit.co/${APPLICATION_RECIPIENT}`;
 
 export async function submitApplication(
   _prevState: ApplicationFormState,
