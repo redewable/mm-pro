@@ -26,7 +26,7 @@ export default async function AdminHome() {
   ];
 
   const alerts: { text: string; href: string }[] = [];
-  if (!provider.productionReady) alerts.push({ text: "Dev storage — connect Vercel Blob before going live", href: "/admin/history" });
+  if (provider.warn) alerts.push({ text: "Storage not connected — attach Vercel Blob and redeploy", href: "/admin/history" });
   if (!authOk) alerts.push({ text: "Set a dashboard password", href: "/admin/account" });
   if (!c.tracking.ga4MeasurementId && !c.tracking.googleAdsId) alerts.push({ text: "Connect Google Ads / Analytics", href: "/admin/seo" });
 

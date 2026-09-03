@@ -142,6 +142,11 @@ export function normalizeContent(raw: unknown): SiteContent {
     },
     seo: {
       ...mergeShallow(d.seo, raw.seo),
+      // The site launched at mmprocon.com; older saves carried a placeholder.
+      siteUrl: (() => {
+        const u = isObj(raw.seo) ? str(raw.seo.siteUrl) : "";
+        return !u || /mnmproconstruction\.com/.test(u) ? d.seo.siteUrl : u;
+      })(),
       keywords: isObj(raw.seo) && Array.isArray(raw.seo.keywords) ? strList(raw.seo.keywords) : d.seo.keywords,
       faq: isObj(raw.seo) ? arr(raw.seo.faq, d.seo.faq) : d.seo.faq,
     },

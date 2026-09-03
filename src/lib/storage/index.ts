@@ -43,19 +43,25 @@ export async function getStorage(): Promise<StorageProvider> {
 export function providerStatus(): {
   name: ProviderName;
   productionReady: boolean;
+  // true only when a live (production) build has no persistent store —
+  // the one situation where saves would be lost.
+  warn: boolean;
   note: string;
 } {
   const name = detectProvider();
+  const isProd = process.env.NODE_ENV === "production";
   if (name === "local") {
     return {
       name,
       productionReady: false,
-      note:
-        "Content is saved to the project folder. Fine for development; on Vercel, attach a Blob store (or set Supabase keys) so edits persist.",
+      warn: isProd,
+      note: isProd
+        ? "No storage connected. Attach a Vercel Blob store (Storage tab) and redeploy so edits persist."
+        : "Local development storage (content/site.json).",
     };
   }
   if (name === "vercel-blob") {
-    return { name, productionReady: true, note: "Vercel Blob store connected." };
+    return { name, productionReady: true, warn: false, note: "Vercel Blob store connected." };
   }
-  return { name, productionReady: true, note: "Supabase connected." };
+  return { name, productionReady: true, warn: false, note: "Supabase connected." };
 }

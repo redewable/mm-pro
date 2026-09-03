@@ -28,7 +28,7 @@ export function AdminShell({
   provider,
 }: {
   children: React.ReactNode;
-  provider: { name: ProviderName; productionReady: boolean; note: string };
+  provider: { name: ProviderName; productionReady: boolean; warn: boolean; note: string };
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -69,8 +69,8 @@ export function AdminShell({
           </svg>
           View live site
         </a>
-        <p className={`text-[11px] leading-snug mt-2 ${provider.productionReady ? "text-white/40" : "text-amber-300/90"}`}>
-          {provider.productionReady ? `Storage: ${provider.name}` : `Storage: ${provider.name} (dev only)`}
+        <p className={`text-[11px] leading-snug mt-2 ${provider.warn ? "text-amber-300/90" : "text-white/40"}`}>
+          {provider.warn ? "Storage not connected" : `Storage: ${provider.name}`}
         </p>
       </div>
     </nav>
