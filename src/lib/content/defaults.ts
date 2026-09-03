@@ -902,7 +902,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     formRecipient: "mram@mmprocon.com",
   },
   seo: {
-    siteUrl: "https://mnmproconstruction.com",
+    siteUrl: "https://www.mmprocon.com",
     defaultTitle: "M&M Pro Construction | General Contractor College Station TX",
     titleTemplate: "%s | M&M Pro Construction",
     description:
