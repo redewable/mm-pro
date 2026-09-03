@@ -12,7 +12,7 @@ export async function pageMetadata(slug: string): Promise<Metadata> {
   const isHome = slug === "home";
   const title = isHome ? { absolute: page.title || c.seo.defaultTitle } : page.title;
   const description = page.seoDescription || c.seo.description;
-  const og = page.ogImage?.url || c.seo.ogImage?.url;
+  const share = { url: absoluteUrl(c, page.ogImage?.url || c.seo.ogImage?.url || "/opengraph-image"), width: 1200, height: 630, alt: page.ogImage?.alt || `${c.business.name} — ${c.business.tagline}` };
   return {
     title,
     description,
@@ -23,7 +23,8 @@ export async function pageMetadata(slug: string): Promise<Metadata> {
       description,
       url: absoluteUrl(c, path),
       type: "website",
-      ...(og ? { images: [{ url: absoluteUrl(c, og) }] } : {}),
+      images: [share],
     },
+    twitter: { card: "summary_large_image", images: [share.url] },
   };
 }

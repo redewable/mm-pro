@@ -9,7 +9,7 @@ import { telHref } from "@/lib/content/helpers";
 
 export async function generateMetadata(): Promise<Metadata> {
   const c = await getSiteContent();
-  const og = c.seo.ogImage?.url;
+  const share = { url: absoluteUrl(c, c.seo.ogImage?.url || "/opengraph-image"), width: 1200, height: 630, alt: `${c.business.name} — ${c.business.tagline}` };
   return {
     metadataBase: new URL(c.seo.siteUrl),
     title: {
@@ -26,10 +26,11 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: c.business.name,
       locale: "en_US",
       type: "website",
-      ...(og ? { images: [{ url: absoluteUrl(c, og) }] } : {}),
+      images: [share],
     },
     twitter: {
       card: "summary_large_image",
+      images: [share.url],
       ...(c.seo.twitterHandle ? { site: c.seo.twitterHandle, creator: c.seo.twitterHandle } : {}),
     },
     verification: {
