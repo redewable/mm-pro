@@ -37,6 +37,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       type: "article",
       ...(p.cover.url ? { images: [{ url: absoluteUrl(c, p.cover.url), alt: p.cover.alt }] } : {}),
     },
+    ...(p.cover.url ? { twitter: { card: "summary_large_image", images: [absoluteUrl(c, p.cover.url)] } } : {}),
   };
 }
 

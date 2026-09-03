@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       type: "video.other",
       ...(thumb ? { images: [{ url: absoluteUrl(c, thumb) }] } : {}),
     },
+    ...(thumb ? { twitter: { card: "summary_large_image", images: [absoluteUrl(c, thumb)] } } : {}),
   };
 }
 
