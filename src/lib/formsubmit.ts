@@ -8,8 +8,8 @@
 // Contact inquiries and careers applications both go to Michael. The very
 // first submission triggers an activation email to the recipient; once he
 // clicks the activation link, every subsequent message arrives in his inbox.
+// The recipient is editable from the dashboard (Business > Form recipient).
 export const FORM_RECIPIENT = "mram@mmprocon.com";
-const FORMSUBMIT_ENDPOINT = `https://formsubmit.co/ajax/${FORM_RECIPIENT}`;
 
 export interface FormSubmitResult {
   success: boolean;
@@ -18,10 +18,12 @@ export interface FormSubmitResult {
 
 export async function sendToFormSubmit(
   payload: FormData,
-  errorMessage: string
+  errorMessage: string,
+  recipient: string = FORM_RECIPIENT
 ): Promise<FormSubmitResult> {
+  const endpoint = `https://formsubmit.co/ajax/${recipient || FORM_RECIPIENT}`;
   try {
-    const res = await fetch(FORMSUBMIT_ENDPOINT, {
+    const res = await fetch(endpoint, {
       method: "POST",
       body: payload,
       headers: { Accept: "application/json" },

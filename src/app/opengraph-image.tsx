@@ -50,6 +50,7 @@ export default async function Image() {
         {logoSrc && (
           <img
             src={logoSrc}
+            alt=""
             width={80}
             height={80}
             style={{ marginBottom: "24px" }}
